@@ -1,0 +1,17 @@
+{
+  "name": "purescript-blog",
+  "version": "1.0.0",
+  "description": "PureScriptとHalogenで作られたブログ",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf output node_modules .spago *.lock .psci_modules dist",
+    "build": "vite build",
+    "compile": "spago build",
+    "test": "spago test",
+    "dev": "vite --port 3000",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.5.0"
+  }
+}
