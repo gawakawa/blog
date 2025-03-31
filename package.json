@@ -8,7 +8,7 @@
     "build": "vite build",
     "compile": "spago build",
     "test": "spago test",
-    "dev": "vite --port 3000",
+    "dev": "vite",
     "preview": "vite preview"
   },
   "devDependencies": {
