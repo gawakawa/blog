@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf output node_modules .spago *.lock .psci_modules dist",
-    "build": "vite build",
+    "build": "spago build && vite build",
     "compile": "spago build",
     "test": "spago test",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "wrangler pages deploy dist --project-name ps-blog --branch=main --commit-dirty=true"
   },
   "devDependencies": {
-    "vite": "^4.5.0"
+    "vite": "^4.5.0",
+    "wrangler": "^4.6.0"
   }
 }

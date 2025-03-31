@@ -11,3 +11,6 @@ generated-docs/
 .psa*
 .spago
 dist/
+.DS_Store
+.env
+.wrangler/

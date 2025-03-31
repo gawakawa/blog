@@ -1,0 +1,2 @@
+name = "ps-blog"
+pages_build_output_dir = "dist"
