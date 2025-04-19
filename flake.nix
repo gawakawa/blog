@@ -26,19 +26,52 @@
       in
       {
         packages = {
-          default = pkgs.hello; # your package here
+          # 依存が多すぎて fetch でこける
+          default = pkgs.stdenv.mkDerivation {
+            name = "ps-blog";
+            src = ./.;
+            
+            nativeBuildInputs = with pkgs; [
+              purs
+              spago-unstable
+              nodejs_20
+              git
+            ];
+            
+            unpackPhase = ''
+              cp -r $src/. .
+              chmod -R u+w .
+            '';
+            
+            buildPhase = ''
+              export HOME=$TMPDIR
+              export CI=true
+              export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+
+              npm install --no-save --no-audit --no-fund --no-interactive
+              
+              spago fetch
+              spago build --pure
+              
+              npx vite build -- --emptyOutDir --mode=production
+            '';
+            
+            installPhase = ''
+              mkdir -p $out
+              cp -r dist/* $out/
+            '';
+          };
         };
 
         devShells.default = pkgs.mkShell {
-          name = "my-purescript-project";
-          inputsFrom = builtins.attrValues self.packages;
+          name = "ps-blog-dev";
           buildInputs = with pkgs; [
             purs
             spago-unstable
             purs-tidy
             purs-backend-es
             purescript-language-server
-            nodejs_23
+            nodejs_22
             esbuild
           ];
         };
