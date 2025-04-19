@@ -32,7 +32,6 @@ renderItemView state itemId =
                 [ HH.text ("優先度: " <> show item.priority) ]
             ]
         , HH.h2_ [ HH.text item.title ]
-        , HH.p [ HP.class_ (H.ClassName "media-author") ] [ HH.text ("著者: " <> item.author) ]
         , HH.div [ HP.class_ (H.ClassName "media-dates") ]
             [ HH.p [ HP.class_ (H.ClassName "media-added-date") ] [ HH.text ("追加日: " <> item.addedDate) ]
             , case item.completedDate of

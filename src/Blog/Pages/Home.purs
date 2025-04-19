@@ -48,6 +48,7 @@ renderFilters state =
             [ HH.text "コンテンツの種類：" ]
         , renderFilterButton (state.typeFilter == Just Book) (FilterByType (Just Book)) "本"
         , renderFilterButton (state.typeFilter == Just Article) (FilterByType (Just Article)) "記事"
+        , renderFilterButton (state.typeFilter == Just Paper) (FilterByType (Just Paper)) "論文"
         , renderFilterButton (state.typeFilter == Nothing) (FilterByType Nothing) "すべて"
         ]
     , HH.div
@@ -93,12 +94,7 @@ renderCategoryFilters selectedCategory =
     
     getAllCategories :: Array Category
     getAllCategories = 
-      [ Programming
-      , ComputerScience
-      , Mathematics
-      , WebDevelopment
-      , FunctionalProgramming
-      , SystemDesign
+      [ Rust
       ]
 
 renderCategoryTag :: forall m. Category -> H.ComponentHTML Action () m
@@ -126,7 +122,6 @@ renderMediaCard item =
             [ HH.text ("優先度: " <> show item.priority) ]
         ]
     , HH.h2_ [ HH.text item.title ]
-    , HH.p [ HP.class_ (H.ClassName "media-author") ] [ HH.text ("著者: " <> item.author) ]
     , HH.div [ HP.class_ (H.ClassName "media-dates") ]
         [ HH.p [ HP.class_ (H.ClassName "media-added-date") ] [ HH.text ("追加日: " <> item.addedDate) ]
         , case item.completedDate of
