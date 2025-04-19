@@ -22,13 +22,13 @@ let
 in
 
 pkgs.stdenv.mkDerivation {
-  name = "purescript-blog";
+  name = "ps-blog";
   src = ./.;
   
   nativeBuildInputs = with pkgs; [
     purs
     spago-unstable
-    nodejs_23
+    nodejs_22
     git
   ];
   
@@ -36,7 +36,6 @@ pkgs.stdenv.mkDerivation {
     export HOME=$TMPDIR
     export CI=true
     export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-    spago build
     npm install --no-save --no-audit --no-fund --no-interactive
     npm run build -- --emptyOutDir --mode=production
   '';
