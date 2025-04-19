@@ -3,9 +3,10 @@ module CSS where
 import Halogen.HTML as HH
 
 stylesheet :: forall r i. HH.HTML r i
-stylesheet = 
-  HH.style_ 
-    [ HH.text """
+stylesheet =
+  HH.style_
+    [ HH.text
+        """
     * {
       margin: 0;
       padding: 0;
@@ -44,34 +45,139 @@ stylesheet =
       color: #666;
     }
     
-    .posts-list {
+    .media-list {
       display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       grid-gap: 2rem;
     }
     
-    .post-preview {
+    .media-card {
       padding: 1.5rem;
       border: 1px solid #eee;
       border-radius: 5px;
       transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background-color: white;
     }
     
-    .post-preview:hover {
+    .media-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     
-    .post-date {
+    .media-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+    
+    .media-type, .media-status, .media-priority {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+    
+    .media-type {
+      background-color: #e0f7fa;
+      color: #006064;
+    }
+    
+    .media-status {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+    }
+    
+    .media-priority {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+    
+    .media-author {
       font-size: 0.9rem;
-      color: #666;
+      color: #444;
       margin-bottom: 0.5rem;
     }
     
-    .post-excerpt {
+    .media-date {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.8rem;
+    }
+    
+    .media-review-preview {
+      margin-bottom: 1rem;
+      font-style: italic;
+      flex-grow: 1;
+      color: #555;
+      line-height: 1.5;
+    }
+    
+    .media-no-review {
+      margin-bottom: 1rem;
+      color: #888;
+      font-style: italic;
+      flex-grow: 1;
+    }
+    
+    .rating {
       margin-bottom: 1rem;
     }
     
-    .read-more, .back-button {
+    .star {
+      color: #ddd;
+      font-size: 1.2rem;
+    }
+    
+    .star.filled {
+      color: #ffc107;
+    }
+    
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+    
+    .filter-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .filter-label {
+      font-weight: 500;
+      margin-right: 0.5rem;
+    }
+    
+    .filter-button {
+      padding: 0.3rem 0.8rem;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    
+    .filter-button:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .filter-button.active {
+      background-color: #0066cc;
+      color: white;
+      border-color: #0055aa;
+    }
+    
+    .view-details, .read-more, .back-button {
       display: inline-block;
       padding: 0.5rem 1rem;
       background-color: #0066cc;
@@ -87,13 +193,113 @@ stylesheet =
       background-color: #0055aa;
     }
     
-    .post-full {
-      padding: 1rem;
+    .media-full {
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
     
-    .post-content {
+    .media-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .media-type-badge, .media-status-badge, .media-priority-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 3px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .media-type-badge {
+      background-color: #e0f7fa;
+      color: #006064;
+    }
+    
+    .media-status-badge {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+    }
+    
+    .media-priority-badge {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+    
+    .media-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .category-tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background-color: #f1f8e9;
+      color: #558b2f;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .category-tag:hover {
+      background-color: #dcedc8;
+      transform: translateY(-2px);
+    }
+    
+    .media-dates {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .media-categories-section {
       margin: 1.5rem 0;
+    }
+    
+    .media-categories-section h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    
+    .media-review {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background-color: #f9f9f9;
+      border-radius: 5px;
       line-height: 1.8;
+    }
+    
+    .media-review h3 {
+      margin-bottom: 1rem;
+      color: #333;
+      font-size: 1.2rem;
+    }
+    
+    .no-review {
+      font-style: italic;
+      color: #888;
+    }
+    
+    .media-link a {
+      color: #0066cc;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    
+    .media-link a:hover {
+      text-decoration: underline;
     }
     
     footer {
@@ -216,4 +422,5 @@ stylesheet =
       flex-direction: column;
       gap: 2rem;
     }
-    """ ]
+    """
+    ]
