@@ -32,6 +32,25 @@ instance Show Priority where
   show Medium = "中"
   show High = "高"
 
+-- カテゴリーを表す型
+data Category 
+  = Programming 
+  | ComputerScience 
+  | Mathematics 
+  | WebDevelopment 
+  | FunctionalProgramming 
+  | SystemDesign
+
+derive instance Eq Category
+
+instance Show Category where
+  show Programming = "プログラミング"
+  show ComputerScience = "コンピュータサイエンス"
+  show Mathematics = "数学"
+  show WebDevelopment = "Web開発"
+  show FunctionalProgramming = "関数型プログラミング"
+  show SystemDesign = "システム設計"
+
 -- メディアアイテムの型定義
 type MediaItem =
   { id :: Int
@@ -43,7 +62,7 @@ type MediaItem =
   , addedDate :: String
   , completedDate :: Maybe String
   , review :: Maybe String
-  , categories :: Array String -- カテゴリータグの配列
+  , categories :: Array Category -- カテゴリータグの配列
   , link :: String -- 記事のURLまたは本の情報ページなど
   }
 
@@ -59,7 +78,7 @@ sampleMediaItems =
     , addedDate: "2025-03-01"
     , completedDate: Just "2025-03-25"
     , review: Just "コンパイラの内部構造について詳しく解説されており、自作言語の参考になった。特に型システムの実装部分が役立った。"
-    , categories: ["コンパイラ", "プログラミング言語", "型システム"]
+    , categories: [Programming, ComputerScience]
     , link: "https://example.com/compiler-book"
     }
   , { id: 2
@@ -71,7 +90,7 @@ sampleMediaItems =
     , addedDate: "2025-04-01"
     , completedDate: Nothing
     , review: Just "前半のモナドの解説がわかりやすい。実践的な例も多く、PureScriptの学習に役立っている。"
-    , categories: ["関数型プログラミング", "モナド", "PureScript"]
+    , categories: [FunctionalProgramming, Mathematics]
     , link: "https://example.com/fp-book"
     }
   , { id: 3
@@ -83,7 +102,7 @@ sampleMediaItems =
     , addedDate: "2025-04-10"
     , completedDate: Just "2025-04-10"
     , review: Just "Halogenフレームワークの使い方がわかりやすく解説されていて、このブログ作成の参考にした。"
-    , categories: ["PureScript", "Halogen", "Web開発"]
+    , categories: [FunctionalProgramming, WebDevelopment]
     , link: "https://example.com/purescript-tutorial"
     }
   , { id: 4
@@ -95,7 +114,7 @@ sampleMediaItems =
     , addedDate: "2025-04-15"
     , completedDate: Nothing
     , review: Nothing
-    , categories: ["分散システム", "ネットワーク", "システム設計"]
+    , categories: [ComputerScience, SystemDesign]
     , link: "https://example.com/distributed-systems"
     }
   , { id: 5
@@ -107,7 +126,7 @@ sampleMediaItems =
     , addedDate: "2025-04-18"
     , completedDate: Nothing
     , review: Nothing
-    , categories: ["WebAssembly", "ブラウザ", "Web技術"]
+    , categories: [WebDevelopment, Programming]
     , link: "https://example.com/webassembly-trends"
     }
   , { id: 6
@@ -119,7 +138,7 @@ sampleMediaItems =
     , addedDate: "2025-04-05"
     , completedDate: Nothing
     , review: Just "プログラミングにおける抽象化の数学的基礎が理解できる。特に関手やモナドの解説がわかりやすい。"
-    , categories: ["圏論", "数学", "関数型プログラミング"]
+    , categories: [Mathematics, FunctionalProgramming]
     , link: "https://example.com/category-theory"
     }
   , { id: 7
@@ -131,7 +150,7 @@ sampleMediaItems =
     , addedDate: "2025-04-20"
     , completedDate: Nothing
     , review: Nothing
-    , categories: ["OS", "システムプログラミング", "コンピュータアーキテクチャ"]
+    , categories: [ComputerScience, Programming]
     , link: "https://example.com/os-book"
     }
   ]

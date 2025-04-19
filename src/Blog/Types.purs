@@ -1,6 +1,6 @@
 module Blog.Types where
 
-import Blog.Data (MediaItem, ReadingStatus, ContentType, Priority)
+import Blog.Data (MediaItem, ReadingStatus, ContentType, Priority, Category)
 import Data.Maybe (Maybe)
 
 type State =
@@ -9,7 +9,7 @@ type State =
   , statusFilter :: Maybe ReadingStatus
   , typeFilter :: Maybe ContentType
   , priorityFilter :: Maybe Priority
-  , categoryFilter :: Maybe String
+  , categoryFilter :: Maybe Category
   }
 
 data View = HomePage | ItemView Int
@@ -21,4 +21,4 @@ data Action
   | FilterByStatus (Maybe ReadingStatus)
   | FilterByType (Maybe ContentType)
   | FilterByPriority (Maybe Priority)
-  | FilterByCategory (Maybe String)
+  | FilterByCategory (Maybe Category)

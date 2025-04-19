@@ -2,11 +2,11 @@ module Blog.Pages.Home where
 
 import Prelude
 
-import Blog.Data (MediaItem, ContentType(..), ReadingStatus(..), Priority(..))
+import Blog.Data (MediaItem, ContentType(..), ReadingStatus(..), Priority(..), Category(..))
 import Blog.Types (State, Action(..))
 import Blog.Utils (truncateContent)
 import Data.Maybe (Maybe(..))
-import Data.Array (sortBy, filter, any, nub, sort, fold)
+import Data.Array (sortBy, filter, any)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
@@ -32,7 +32,7 @@ filterMediaItems state =
     (state.priorityFilter == Nothing || state.priorityFilter == Just item.priority) &&
     (state.categoryFilter == Nothing || containsCategory item.categories state.categoryFilter)
   
-  containsCategory :: Array String -> Maybe String -> Boolean
+  containsCategory :: Array Category -> Maybe Category -> Boolean
   containsCategory _ Nothing = true
   containsCategory categories (Just category) = 
     categories # any (\cat -> cat == category)
@@ -70,11 +70,11 @@ renderFilters state =
         , renderFilterButton (state.priorityFilter == Just Low) (FilterByPriority (Just Low)) "低"
         , renderFilterButton (state.priorityFilter == Nothing) (FilterByPriority Nothing) "すべて"
         ]
-    , renderCategoryFilters state.mediaItems state.categoryFilter
+    , renderCategoryFilters state.categoryFilter
     ]
 
-renderCategoryFilters :: forall m. Array MediaItem -> Maybe String -> H.ComponentHTML Action () m
-renderCategoryFilters items selectedCategory =
+renderCategoryFilters :: forall m. Maybe Category -> H.ComponentHTML Action () m
+renderCategoryFilters selectedCategory =
   HH.div
     [ HP.class_ (H.ClassName "filter-group category-filters") ]
     [ HH.label
@@ -83,29 +83,31 @@ renderCategoryFilters items selectedCategory =
     , renderFilterButton (selectedCategory == Nothing) (FilterByCategory Nothing) "すべて"
     , HH.div
         [ HP.class_ (H.ClassName "category-buttons") ]
-        (allCategoriesButtons items selectedCategory)
+        (allCategoriesButtons selectedCategory)
     ]
   where
-    allCategoriesButtons :: Array MediaItem -> Maybe String -> Array (H.ComponentHTML Action () m)
-    allCategoriesButtons mediaItems selected =
-      getAllCategories mediaItems
-        # map (\cat -> renderFilterButton (selected == Just cat) (FilterByCategory (Just cat)) cat)
+    allCategoriesButtons :: Maybe Category -> Array (H.ComponentHTML Action () m)
+    allCategoriesButtons selected =
+      getAllCategories
+        # map (\cat -> renderFilterButton (selected == Just cat) (FilterByCategory (Just cat)) (show cat))
     
-    getAllCategories :: Array MediaItem -> Array String
-    getAllCategories mediaItems =
-      mediaItems
-        # map (_.categories)
-        # fold
-        # nub
-        # sort
+    getAllCategories :: Array Category
+    getAllCategories = 
+      [ Programming
+      , ComputerScience
+      , Mathematics
+      , WebDevelopment
+      , FunctionalProgramming
+      , SystemDesign
+      ]
 
-renderCategoryTag :: forall m. String -> H.ComponentHTML Action () m
+renderCategoryTag :: forall m. Category -> H.ComponentHTML Action () m
 renderCategoryTag category =
   HH.span
     [ HP.class_ (H.ClassName "category-tag")
     , HE.onClick \_ -> FilterByCategory (Just category)
     ]
-    [ HH.text category ]
+    [ HH.text (show category) ]
 
 renderMediaCard :: forall m. MediaItem -> H.ComponentHTML Action () m
 renderMediaCard item =
