@@ -34,10 +34,11 @@ pkgs.stdenv.mkDerivation {
   
   buildPhase = ''
     export HOME=$TMPDIR
+    export CI=true
     export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
     spago build
-    npm install --no-save
-    npm run build
+    npm install --no-save --no-audit --no-fund --no-interactive
+    npm run build -- --emptyOutDir --mode=production
   '';
   
   installPhase = ''
