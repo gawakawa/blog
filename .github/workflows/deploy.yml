@@ -11,9 +11,9 @@ jobs:
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
-      - run: nix develop
-      - run: npm i
-      - run: npm run build
+      - name: Setup Nix environment and build
+        run: |
+          nix develop -c bash -c "npm i && npm run build"
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
