@@ -27,14 +27,15 @@ filterMediaItems state =
     # filter filterFn
   where
   filterFn item =
-    (state.typeFilter == Nothing || state.typeFilter == Just item.contentType) &&
-    (state.statusFilter == Nothing || state.statusFilter == Just item.status) &&
-    (state.priorityFilter == Nothing || state.priorityFilter == Just item.priority) &&
-    (state.categoryFilter == Nothing || containsCategory item.categories state.categoryFilter)
-  
+    (state.typeFilter == Nothing || state.typeFilter == Just item.contentType)
+      && (state.statusFilter == Nothing || state.statusFilter == Just item.status)
+      && (state.priorityFilter == Nothing || state.priorityFilter == Just item.priority)
+      &&
+        (state.categoryFilter == Nothing || containsCategory item.categories state.categoryFilter)
+
   containsCategory :: Array Category -> Maybe Category -> Boolean
   containsCategory _ Nothing = true
-  containsCategory categories (Just category) = 
+  containsCategory categories (Just category) =
     categories # any (\cat -> cat == category)
 
 renderFilters :: forall m. State -> H.ComponentHTML Action () m
@@ -45,7 +46,7 @@ renderFilters state =
         [ HP.class_ (H.ClassName "filter-group") ]
         [ HH.label
             [ HP.class_ (H.ClassName "filter-label") ]
-            [ HH.text "コンテンツの種類：" ]
+            [ HH.text "コンテンツ" ]
         , renderFilterButton (state.typeFilter == Just Book) (FilterByType (Just Book)) "本"
         , renderFilterButton (state.typeFilter == Just Article) (FilterByType (Just Article)) "記事"
         , renderFilterButton (state.typeFilter == Just Paper) (FilterByType (Just Paper)) "論文"
@@ -55,7 +56,7 @@ renderFilters state =
         [ HP.class_ (H.ClassName "filter-group") ]
         [ HH.label
             [ HP.class_ (H.ClassName "filter-label") ]
-            [ HH.text "読書状態：" ]
+            [ HH.text "進捗" ]
         , renderFilterButton (state.statusFilter == Just ToRead) (FilterByStatus (Just ToRead)) "読みたい"
         , renderFilterButton (state.statusFilter == Just Reading) (FilterByStatus (Just Reading)) "読んでる"
         , renderFilterButton (state.statusFilter == Just Completed) (FilterByStatus (Just Completed)) "読んだ"
@@ -65,7 +66,7 @@ renderFilters state =
         [ HP.class_ (H.ClassName "filter-group") ]
         [ HH.label
             [ HP.class_ (H.ClassName "filter-label") ]
-            [ HH.text "優先度：" ]
+            [ HH.text "優先度" ]
         , renderFilterButton (state.priorityFilter == Just High) (FilterByPriority (Just High)) "高"
         , renderFilterButton (state.priorityFilter == Just Medium) (FilterByPriority (Just Medium)) "中"
         , renderFilterButton (state.priorityFilter == Just Low) (FilterByPriority (Just Low)) "低"
@@ -80,22 +81,22 @@ renderCategoryFilters selectedCategory =
     [ HP.class_ (H.ClassName "filter-group category-filters") ]
     [ HH.label
         [ HP.class_ (H.ClassName "filter-label") ]
-        [ HH.text "カテゴリー：" ]
+        [ HH.text "カテゴリー" ]
     , renderFilterButton (selectedCategory == Nothing) (FilterByCategory Nothing) "すべて"
     , HH.div
         [ HP.class_ (H.ClassName "category-buttons") ]
         (allCategoriesButtons selectedCategory)
     ]
   where
-    allCategoriesButtons :: Maybe Category -> Array (H.ComponentHTML Action () m)
-    allCategoriesButtons selected =
-      getAllCategories
-        # map (\cat -> renderFilterButton (selected == Just cat) (FilterByCategory (Just cat)) (show cat))
-    
-    getAllCategories :: Array Category
-    getAllCategories = 
-      [ Rust
-      ]
+  allCategoriesButtons :: Maybe Category -> Array (H.ComponentHTML Action () m)
+  allCategoriesButtons selected =
+    getAllCategories
+      # map (\cat -> renderFilterButton (selected == Just cat) (FilterByCategory (Just cat)) (show cat))
+
+  getAllCategories :: Array Category
+  getAllCategories =
+    [ Rust
+    ]
 
 renderCategoryTag :: forall m. Category -> H.ComponentHTML Action () m
 renderCategoryTag category =
@@ -133,9 +134,9 @@ renderMediaCard item =
     , case item.review of
         Just review -> HH.p [ HP.class_ (H.ClassName "media-review-preview") ] [ HH.text (truncateContent review) ]
         Nothing -> HH.p [ HP.class_ (H.ClassName "media-no-review") ] [ HH.text (if item.status == Completed then "感想はまだありません" else "") ]
-    , HH.p [ HP.class_ (H.ClassName "media-link") ] 
-        [ HH.a 
-            [ HP.href item.link, HP.target "_blank" ] 
+    , HH.p [ HP.class_ (H.ClassName "media-link") ]
+        [ HH.a
+            [ HP.href item.link, HP.target "_blank" ]
             [ HH.text "リンク" ]
         ]
     , HH.button
