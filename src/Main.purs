@@ -11,7 +11,6 @@ import Data.String as String
 import Data.Array (findMap)
 import Effect (Effect)
 import Effect.Class (class MonadEffect)
-import Effect.Console (log)
 import Halogen as H
 import Halogen.Aff as HA
 import Halogen.HTML as HH
@@ -24,20 +23,20 @@ main = HA.runHalogenAff do
   body <- HA.awaitBody
   runUI component unit body
 
-type State = 
+type State =
   { posts :: Array Post
   , currentView :: View
   }
 
 data View = HomePage | PostView Int
 
-data Action 
+data Action
   = Initialize
   | ViewPost Int
   | BackToHome
 
 initialState :: forall i. i -> State
-initialState _ = 
+initialState _ =
   { posts: samplePosts
   , currentView: HomePage
   }
@@ -51,7 +50,7 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action () m
-render state = 
+render state =
   HH.div_
     [ stylesheet
     , HH.div
@@ -69,8 +68,135 @@ render state =
 renderHomePage :: forall m. State -> H.ComponentHTML Action () m
 renderHomePage state =
   HH.div
-    [ HP.class_ (H.ClassName "posts-list") ]
-    (map renderPostPreview state.posts)
+    [ HP.class_ (H.ClassName "home-content") ]
+    [ HH.div
+        [ HP.class_ (H.ClassName "yearly-goals") ]
+        [ HH.h3_ [ HH.text "2025 年度の目標" ]
+        , HH.div [ HP.class_ (H.ClassName "goal-main") ]
+            [ HH.h4_ [ HH.text "達成感を得る" ]
+            , HH.div [ HP.class_ (H.ClassName "goal-medium") ]
+                [ HH.h5_ [ HH.text "本、論文を読む" ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-1-1"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-1-1"
+                        ]
+                        [ HH.text "週に 1 度は必ず本を読む" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-1-2"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-1-2"
+                        ]
+                        [ HH.text "月に 1 本は論文を読む" ]
+                    ]
+                ]
+            , HH.div [ HP.class_ (H.ClassName "goal-medium") ]
+                [ HH.h5_ [ HH.text "自作する" ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-2-1"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-2-1"
+                        ]
+                        [ HH.text "OS" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-2-2"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-2-2"
+                        ]
+                        [ HH.text "ネットワーク" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-2-3"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-2-3"
+                        ]
+                        [ HH.text "ブラウザ" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-2-4"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-2-4"
+                        ]
+                        [ HH.text "Promise" ]
+                    ]
+                ]
+            , HH.div [ HP.class_ (H.ClassName "goal-medium") ]
+                [ HH.h5_ [ HH.text "資格を取る" ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-3-1"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-3-1"
+                        ]
+                        [ HH.text "応用情報、DB スペシャリスト" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-3-2"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-3-2"
+                        ]
+                        [ HH.text "Google Cloud Architect" ]
+                    ]
+                , HH.div [ HP.class_ (H.ClassName "checkbox-container") ]
+                    [ HH.input
+                        [ HP.type_ HP.InputCheckbox
+                        , HP.id "goal-3-3"
+                        , HP.class_ (H.ClassName "goal-checkbox")
+                        ]
+                    , HH.label
+                        [ HP.class_ (H.ClassName "checkbox-label")
+                        , HP.for "goal-3-3"
+                        ]
+                        [ HH.text "TOEFL 80 点以上" ]
+                    ]
+                ]
+            ]
+        ]
+    , HH.div
+        [ HP.class_ (H.ClassName "posts-list") ]
+        (map renderPostPreview state.posts)
+    ]
 
 renderPostPreview :: forall m. Post -> H.ComponentHTML Action () m
 renderPostPreview post =
@@ -95,10 +221,11 @@ renderPostView state postId =
         [ HP.class_ (H.ClassName "post-full") ]
         [ HH.h2_ [ HH.text post.title ]
         , HH.p [ HP.class_ (H.ClassName "post-date") ] [ HH.text post.date ]
-        , HH.div 
-            [ HP.class_ (H.ClassName "post-content") ] 
-            (post.content # String.split (String.Pattern "\n\n") # map \para -> 
-              HH.p_ [ HH.text para ])
+        , HH.div
+            [ HP.class_ (H.ClassName "post-content") ]
+            ( post.content # String.split (String.Pattern "\n\n") # map \para ->
+                HH.p_ [ HH.text para ]
+            )
         , HH.button
             [ HP.class_ (H.ClassName "back-button")
             , HE.onClick \_ -> BackToHome
@@ -121,6 +248,5 @@ findPost posts id = posts # findMap \post -> if post.id == id then Just post els
 
 truncateContent :: String -> String
 truncateContent content =
-  if String.length content > 150
-    then String.take 150 content <> "..."
-    else content
+  if String.length content > 150 then String.take 150 content <> "..."
+  else content
