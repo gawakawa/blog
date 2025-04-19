@@ -1,5 +1,5 @@
-# This file is a non-flake alternative for nix-build
-# To build: nix-build
+# `nix-build` で動く
+# `nix build` を実行したいが、なんか動かないから一応残しとく
 
 let
   lock = builtins.fromJSON (builtins.readFile ./flake.lock);
