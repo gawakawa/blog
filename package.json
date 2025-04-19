@@ -10,7 +10,7 @@
     "test": "spago test",
     "dev": "vite",
     "preview": "vite preview",
-    "deploy": "wrangler pages deploy dist --project-name ps-blog --branch=main --commit-dirty=true"
+    "deploy": "npm run build && wrangler pages deploy dist"
   },
   "devDependencies": {
     "vite": "^4.5.0",
