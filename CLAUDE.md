@@ -17,3 +17,6 @@
 - Follow PureScript naming conventions: camelCase for values, PascalCase for types
 - Error handling: use `Maybe`, `Either`, or `ExceptT` for explicit error handling
 - Prefer record syntax for component state management
+
+## Cloudflare
+- https://developers.cloudflare.com/llms.txt を参考にしなさい。
