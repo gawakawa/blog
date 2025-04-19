@@ -6,7 +6,7 @@
 - Run all tests: `spago test`
 - Run single test module: `spago test --main Test.ModuleName`
 - Format code: `purs-tidy format-in-place "src/**/*.purs" "test/**/*.purs"`
-- Type check: `spago build --no-install --purs-args "--json-errors"`
+- Type check: `spago build`
 
 ## Code Style Guidelines
 - Import organization: group imports by category, `Prelude` first, then core libraries
@@ -17,6 +17,7 @@
 - Follow PureScript naming conventions: camelCase for values, PascalCase for types
 - Error handling: use `Maybe`, `Either`, or `ExceptT` for explicit error handling
 - Prefer record syntax for component state management
+- error だけでなく warning を無視することも禁じます。
 
 ## Cloudflare
 - https://developers.cloudflare.com/llms.txt を参考にしなさい。
