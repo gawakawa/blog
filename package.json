@@ -1,7 +1,6 @@
 {
-  "name": "purescript-blog",
+  "name": "iota-home",
   "version": "1.0.0",
-  "description": "PureScriptとHalogenで作られたブログ",
   "type": "module",
   "scripts": {
     "clean": "rm -rf output node_modules .spago *.lock .psci_modules dist",
@@ -10,7 +9,7 @@
     "test": "spago test",
     "dev": "vite",
     "preview": "vite preview",
-    "deploy": "npm run build && wrangler pages deploy dist"
+    "deploy": "wrangler pages deploy dist"
   },
   "devDependencies": {
     "vite": "^4.5.0",
