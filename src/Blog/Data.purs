@@ -32,7 +32,7 @@ instance Show Priority where
   show Medium = "中"
   show High = "高"
 
-data Category = Rust | Compiler | Network | Effect | Logic
+data Category = Rust | Compiler | Network | Effect | Logic | TypeScript | TypeSystem
 
 derive instance Eq Category
 
@@ -42,6 +42,8 @@ instance Show Category where
   show Network = "ネットワーク"
   show Effect = "エフェクト"
   show Logic = "論理学"
+  show TypeScript = "TypeScript"
+  show TypeSystem = "型システム"
 
 type MediaItem =
   { id :: Int
@@ -123,5 +125,16 @@ sampleMediaItems =
     , review: Nothing
     , categories: [ Logic ]
     , link: "https://www.amazon.co.jp/%E8%A8%88%E7%AE%97%E8%AB%96%E7%90%86%E3%81%A8%E4%BA%BA%E9%96%93%E3%81%AE%E6%80%9D%E8%80%83-%E6%8E%A8%E8%AB%96AI%E3%81%B8%E3%81%AE%E8%AB%96%E7%90%86%E7%9A%84%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81-%E3%83%AD%E3%83%90%E3%83%BC%E3%83%88%E3%83%BB%E3%82%B3%E3%83%AF%E3%83%AB%E3%82%B9%E3%82%AD/dp/4909240063"
+    }
+  , { id: 7
+    , title: "型システムのしくみ ― TypeScriptで実装しながら学ぶ型とプログラミング言語"
+    , contentType: Book
+    , status: ToRead
+    , priority: High
+    , addedDate: "2025-04-20"
+    , completedDate: Nothing
+    , review: Nothing
+    , categories: [ TypeSystem ]
+    , link: "https://www.lambdanote.com/products/type-systems"
     }
   ]
