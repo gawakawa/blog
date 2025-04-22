@@ -96,6 +96,12 @@ renderCategoryFilters selectedCategory =
   getAllCategories :: Array Category
   getAllCategories =
     [ Rust
+    , Compiler
+    , Network
+    , Effect
+    , Logic
+    , TypeScript
+    , TypeSystem
     ]
 
 renderCategoryTag :: forall m. Category -> H.ComponentHTML Action () m
