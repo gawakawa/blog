@@ -32,7 +32,7 @@ instance Show Priority where
   show Medium = "中"
   show High = "高"
 
-data Category = Rust | Compiler | Network | Effect | Logic | TypeScript | TypeSystem
+data Category = Rust | Compiler | Network | Effect | Logic | TypeScript | TypeSystem | Continuation | BuildYourOwnX
 
 derive instance Eq Category
 
@@ -44,6 +44,8 @@ instance Show Category where
   show Logic = "論理学"
   show TypeScript = "TypeScript"
   show TypeSystem = "型システム"
+  show Continuation = "継続"
+  show BuildYourOwnX = "自作"
 
 type MediaItem =
   { id :: Int
@@ -136,5 +138,28 @@ sampleMediaItems =
     , review: Nothing
     , categories: [ TypeSystem ]
     , link: "https://www.lambdanote.com/products/type-systems"
+    }
+  , { id: 8
+    , title: "Compiling with Continuations"
+    , contentType: Book
+    , status: ToRead
+    , priority: High
+    , addedDate: "2025-04-21"
+    , completedDate: Nothing
+    , review: Nothing
+    , categories: [ Continuation ]
+    , link: "https://www.amazon.co.jp/Compiling-Continuations-English-Andrew-Appel-ebook/dp/B00E3UR010/ref=tmm_kin_swatch_0"
+
+    }
+  , { id: 9
+    , title: "Build a Frontend Web Framework (From Scratch)"
+    , contentType: Book
+    , status: ToRead
+    , priority: High
+    , addedDate: "2025-04-21"
+    , completedDate: Nothing
+    , review: Nothing
+    , categories: [ BuildYourOwnX ]
+    , link: "https://github.com/angelsolaorbaiceta/fe-fwk-book?tab=readme-ov-file"
     }
   ]

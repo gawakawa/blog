@@ -2,11 +2,11 @@ module Blog.Pages.Home where
 
 import Prelude
 
-import Blog.Data (MediaItem, ContentType(..), ReadingStatus(..), Priority(..), Category(..))
+import Blog.Data (Category(..), ContentType(..), MediaItem, Priority(..), ReadingStatus(..))
 import Blog.Types (State, Action(..))
 import Blog.Utils (truncateContent)
-import Data.Maybe (Maybe(..))
 import Data.Array (sortBy, filter, any)
+import Data.Maybe (Maybe(..))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
@@ -102,6 +102,8 @@ renderCategoryFilters selectedCategory =
     , Logic
     , TypeScript
     , TypeSystem
+    , Continuation
+    , BuildYourOwnX
     ]
 
 renderCategoryTag :: forall m. Category -> H.ComponentHTML Action () m
