@@ -31,17 +31,21 @@ renderItemView state itemId =
                 [ HP.class_ (H.ClassName "media-priority-badge") ]
                 [ HH.text ("優先度: " <> show item.priority) ]
             ]
-        , HH.h2_ [ HH.text item.title ]
+        , HH.h2_ [ 
+            HH.text item.title, 
+            HH.a [ HP.href item.link, HP.target "_blank", HP.class_ (H.ClassName "title-link") ] 
+              [ HH.img 
+                  [ HP.src "/images/link-icon.svg"
+                  , HP.alt "External link"
+                  , HP.class_ (H.ClassName "link-icon")
+                  ] 
+              ]
+          ]
         , HH.div [ HP.class_ (H.ClassName "media-dates") ]
             [ HH.p [ HP.class_ (H.ClassName "media-added-date") ] [ HH.text ("追加日: " <> item.addedDate) ]
             , case item.completedDate of
                 Just date -> HH.p [ HP.class_ (H.ClassName "media-completed-date") ] [ HH.text ("読了日: " <> date) ]
                 Nothing -> HH.div_ []
-            ]
-        , HH.p [ HP.class_ (H.ClassName "media-link") ]
-            [ HH.a
-                [ HP.href item.link, HP.target "_blank" ]
-                [ HH.text "リンク" ]
             ]
         , HH.div [ HP.class_ (H.ClassName "media-categories-section") ]
             [ HH.h3_ [ HH.text "カテゴリー" ]

@@ -291,6 +291,22 @@ stylesheet =
       color: #888;
     }
     
+    .title-link {
+      text-decoration: none;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    
+    .link-icon {
+      width: 1rem;
+      height: 1rem;
+      transition: transform 0.2s ease;
+    }
+    
+    .title-link:hover .link-icon {
+      transform: scale(1.2);
+    }
+    
     .media-link a {
       color: #0066cc;
       text-decoration: none;

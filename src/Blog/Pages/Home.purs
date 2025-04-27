@@ -130,7 +130,16 @@ renderMediaCard item =
             [ HP.class_ (H.ClassName "media-priority") ]
             [ HH.text ("優先度: " <> show item.priority) ]
         ]
-    , HH.h2_ [ HH.text item.title ]
+    , HH.h2_ [ 
+        HH.text item.title, 
+        HH.a [ HP.href item.link, HP.target "_blank", HP.class_ (H.ClassName "title-link") ] 
+          [ HH.img 
+              [ HP.src "/images/link-icon.svg"
+              , HP.alt "External link"
+              , HP.class_ (H.ClassName "link-icon")
+              ] 
+          ]
+      ]
     , HH.div [ HP.class_ (H.ClassName "media-dates") ]
         [ HH.p [ HP.class_ (H.ClassName "media-added-date") ] [ HH.text ("追加日: " <> item.addedDate) ]
         , case item.completedDate of
@@ -142,11 +151,6 @@ renderMediaCard item =
     , case item.review of
         Just review -> HH.p [ HP.class_ (H.ClassName "media-review-preview") ] [ HH.text (truncateContent review) ]
         Nothing -> HH.p [ HP.class_ (H.ClassName "media-no-review") ] [ HH.text (if item.status == Completed then "感想はまだありません" else "") ]
-    , HH.p [ HP.class_ (H.ClassName "media-link") ]
-        [ HH.a
-            [ HP.href item.link, HP.target "_blank" ]
-            [ HH.text "リンク" ]
-        ]
     , HH.button
         [ HP.class_ (H.ClassName "view-details")
         , HE.onClick \_ -> ViewItem item.id
