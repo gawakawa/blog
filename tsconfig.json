@@ -5,6 +5,8 @@
 	"compilerOptions": {
 		"strictNullChecks": true,
 		"noUncheckedIndexedAccess": true,
-		"exactOptionalPropertyTypes": true
+		"exactOptionalPropertyTypes": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
 	}
 }
