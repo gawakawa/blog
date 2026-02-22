@@ -28,3 +28,13 @@ jobs:
 
       - name: Test
         run: nix shell .#ci -c bash -c "pnpm install --frozen-lockfile && pnpm test"
+
+  ci-success:
+    needs: [check]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Verify all checks passed
+        run: exit 1
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
