@@ -145,3 +145,11 @@ vite.config.ts.timestamp-*
 result
 .mcp.json
 .pre-commit-config.yaml
+
+# Astro
+.astro/
+
+pnpm-debug.log*
+
+.DS_Store
+.idea/
