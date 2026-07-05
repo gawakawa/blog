@@ -8,12 +8,6 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://example.com',
 	integrations: [mdx(), sitemap()],
-	// Vite's default cacheDir lives under node_modules/.vite, which is
-	// read-only in the nix build sandbox (node_modules is a symlink into the
-	// nix store there). Move it into the writable project root instead.
-	vite: {
-		cacheDir: './.vite-cache',
-	},
 	fonts: [
 		{
 			provider: fontProviders.local(),
