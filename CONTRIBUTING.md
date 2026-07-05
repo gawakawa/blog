@@ -6,10 +6,12 @@
 devShell が自動でロードされる。
 
 ```sh
-pnpm dev      # localhost:4321 でローカルサーバーを起動
-pnpm build    # ./dist/ に本番ビルドを出力
-pnpm preview  # ビルド結果をローカルでプレビュー
-pnpm test     # vitest run
+pnpm dev         # localhost:4321 でローカルサーバーを起動
+pnpm build       # ./dist/ に本番ビルドを出力
+pnpm preview     # ビルド結果をローカルでプレビュー
+pnpm preview:cf  # Cloudflare Workers ランタイムでプレビュー
+pnpm deploy      # Cloudflare Workers にデプロイ
+pnpm test        # vitest run
 ```
 
 依存関係の追加・更新は `pnpm` コマンド経由で行う（`package.json` を直接編集しない）。更新後は
@@ -53,21 +55,3 @@ nix build .#site   # dist 相当を ./result に生成
 | `CLOUDFLARE_ACCOUNT_ID` | デプロイ先アカウントの ID            |
 
 `CACHIX_AUTH_TOKEN` は CI と共用のためリポジトリレベルの Secret のまま。
-
-初回の `wrangler deploy` で Worker `blog` が自動作成され、`https://blog.<アカウントの
-サブドメイン>.workers.dev` で配信される（現時点ではカスタムドメイン未設定）。
-
-wrangler は `package.json` の devDependencies には含めていない（依存ツリーが大きく、Nix の
-`node-modules.nix` ハッシュ更新を誘発するため）。CI は `cloudflare/wrangler-action` の
-`wranglerVersion` でバージョンを固定している。ローカルで wrangler を使う場合は
-`pnpm dlx wrangler <command>` を使う。
-
-```sh
-pnpm build && pnpm dlx wrangler dev    # ローカルで Workers ランタイム上のプレビュー
-```
-
-## 今後の予定
-
-カスタムドメイン（`blog.i0ta.dev`）の割り当ては次のフェーズで対応する。`wrangler.jsonc` に
-`routes` を追記し、`CLOUDFLARE_API_TOKEN` に `Workers Routes:Edit` と該当 zone の DNS 編集権限を
-追加する必要がある。
