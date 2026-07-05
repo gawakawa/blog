@@ -17,8 +17,10 @@
 		0 16px 32px rgb(96 115 159 / 33%);
 }
 
-/* Keep the existing accent color in Tailwind Typography's prose output. */
+/* Keep the existing color scheme in Tailwind Typography's prose output. */
 .prose {
+	--tw-prose-body: var(--color-gray-dark);
+	--tw-prose-headings: var(--color-black);
 	--tw-prose-links: var(--color-accent);
 	--tw-prose-quotes: var(--color-black);
 	--tw-prose-quote-borders: var(--color-accent);
