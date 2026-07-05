@@ -17,7 +17,16 @@ _: {
           extraPackages = [ pkgs.nodejs_24 ]; # tsgolint (type-aware) needs node
           entry = toString (
             pkgs.writeShellScript "oxlint-entry" ''
-              [ -e node_modules ] || ln -sfn ${config.packages.nodeModules} node_modules
+              source ${config.packages.nodeModulesSetup}
+              # .astro/types.d.ts declares astro:content etc.; regenerate it
+              # via `astro sync` only when stale (it's a full Vite startup).
+              types=.astro/types.d.ts
+              if [ ! -e "$types" ] \
+                || [ astro.config.mjs -nt "$types" ] \
+                || [ src/content.config.ts -nt "$types" ] \
+                || find src/content -newer "$types" -print -quit | grep -q .; then
+                node_modules/.bin/astro sync
+              fi
               exec ${pkgs.oxlint}/bin/oxlint
             ''
           );

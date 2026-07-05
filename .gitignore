@@ -83,6 +83,9 @@ out
 dist
 .output
 
+# Astro build output and generated types
+.astro/
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -143,5 +146,4 @@ vite.config.ts.timestamp-*
 
 .direnv
 result
-.mcp.json
 .pre-commit-config.yaml

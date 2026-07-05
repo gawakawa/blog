@@ -1,20 +1,35 @@
 {
-	"name": "pnpm",
+	"name": "blog",
 	"version": "1.0.0",
-	"description": "",
-	"keywords": [],
 	"license": "ISC",
-	"author": "",
 	"type": "module",
-	"main": "index.js",
 	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
 		"lint": "oxlint",
 		"test": "vitest run"
 	},
+	"dependencies": {
+		"@astrojs/mdx": "^7.0.2",
+		"@astrojs/rss": "^4.0.19",
+		"@astrojs/sitemap": "^3.7.3",
+		"@tailwindcss/vite": "^4.3.2",
+		"astro": "^7.0.6",
+		"sharp": "^0.35.3",
+		"tailwindcss": "^4.3.2"
+	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.9",
+		"@tailwindcss/typography": "^0.5.20",
 		"oxlint": "^1.32.0",
 		"oxlint-tsgolint": "^0.23.0",
+		"typescript": "^6.0.3",
 		"vitest": "^4.0.1"
+	},
+	"engines": {
+		"node": ">=24"
 	},
 	"packageManager": "pnpm@10.19.0"
 }
