@@ -1,11 +1,8 @@
 # CLAUDE.md
 
-## Commands
+## Development
 
-- `nix fmt` - Format code
-- `nix flake check` - Run checks (format, lint)
-- `pnpm build` - Build the project
-- `pnpm test` - Run tests
+- 開発環境については CONTRIBUTING.md を参照。
 
 ## Updating dependencies
 

@@ -12,40 +12,10 @@ pnpm preview     # ビルド結果をローカルでプレビュー
 pnpm preview:cf  # Cloudflare Workers ランタイムでプレビュー
 pnpm deploy      # Cloudflare Workers にデプロイ
 pnpm test        # vitest run
+nix fmt          # コードを整形
+nix flake check  # フォーマット・lint・型チェックをまとめて実行
 ```
 
 依存関係の追加・更新は `pnpm` コマンド経由で行う（`package.json` を直接編集しない）。更新後は
 `nix flake check` を実行してハッシュ不一致エラーを確認し、`got:` 行のハッシュを
 `flakes/node-modules.nix` の `hash` に反映する。
-
-## デプロイ構成
-
-このブログは Astro の完全な静的サイト（SSG）。SSR を使わないため `@astrojs/cloudflare` などの
-adapter は導入せず、`astro build` が出力する `dist/` を Cloudflare Workers の静的アセット配信
-機能でそのまま公開している（[Astro 公式ガイド](https://docs.astro.build/en/guides/deploy/cloudflare/)
-が新規プロジェクトに推奨する構成）。設定は `wrangler.jsonc` にある。
-
-ビルドは `pnpm build`（`astro build`）で行う。pnpm/Node.js は Nix の `packages.ci` から
-`nix profile add .#ci` で用意する。
-
-## CI/CD
-
-- **PR**: `.github/workflows/ci.yml` が `nix flake check`（テスト・lint・フォーマット）に続けて
-  `pnpm build` を実行し、壊れた MDX や content のミスを検出する。
-- **`main` への push**: `.github/workflows/deploy.yml` が `pnpm build` → Wrangler で
-  Cloudflare Workers にデプロイする。`main` は PR 通過後にマージされるため、CI は push 時には
-  再実行しない（冗長な二重実行を避けている）。
-
-デプロイ手動実行は `workflow_dispatch` からも可能。
-
-### 必要な GitHub Secrets / Environment
-
-デプロイジョブは GitHub の `prd` Environment に紐づいている。同 Environment に以下の Secrets を
-登録すること:
-
-| Secret                  | 用途                                 |
-| :---------------------- | :----------------------------------- |
-| `CLOUDFLARE_API_TOKEN`  | 権限スコープ: `Workers Scripts:Edit` |
-| `CLOUDFLARE_ACCOUNT_ID` | デプロイ先アカウントの ID            |
-
-`CACHIX_AUTH_TOKEN` は CI と共用のためリポジトリレベルの Secret のまま。
