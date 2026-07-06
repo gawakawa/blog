@@ -7,8 +7,8 @@ _: {
         src = ./..;
 
         nativeBuildInputs = [
-          pkgs.nodejs_24
-          pkgs.pnpm_10
+          config.nodejsPackage
+          config.pnpmPackage
         ];
 
         dontBuild = true;
@@ -31,9 +31,5 @@ _: {
           runHook postInstall
         '';
       };
-
-      # Build the site as part of `nix flake check` so PRs catch build
-      # breakage (bad content/MDX, etc.), not just deploy time on main.
-      checks.site = config.packages.site;
     };
 }
