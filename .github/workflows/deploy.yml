@@ -37,13 +37,14 @@ jobs:
           name: gawakawa
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      - name: Build site
-        run: nix build .#site
+      - name: Install pnpm/Node.js
+        run: nix profile add .#ci
 
-      - name: Copy build output
-        run: |
-          mkdir -p dist
-          cp -rL result/. dist/
+      - name: Install dependencies
+        run: pnpm install --prod --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
