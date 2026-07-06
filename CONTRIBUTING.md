@@ -25,20 +25,14 @@ adapter は導入せず、`astro build` が出力する `dist/` を Cloudflare W
 機能でそのまま公開している（[Astro 公式ガイド](https://docs.astro.build/en/guides/deploy/cloudflare/)
 が新規プロジェクトに推奨する構成）。設定は `wrangler.jsonc` にある。
 
-ビルドは Nix 上で行う（`flakes/packages.nix` の `packages.site`）。この derivation は
-`packages.default` としても、`flakes/checks.nix` の `checks.site` としても参照されている。
-後者により、PR での `nix flake check` が毎回サイトのビルドを実行し、壊れた MDX や content の
-ミスを CI の時点で検出できる。
-
-```sh
-nix build .#site   # dist 相当を ./result に生成
-```
+ビルドは `pnpm build`（`astro build`）で行う。pnpm/Node.js は Nix の `packages.ci` から
+`nix profile add .#ci` で用意する。
 
 ## CI/CD
 
-- **PR**: `.github/workflows/ci.yml` が `nix flake check` を実行する（テスト・lint・フォーマット・
-  サイトビルドを含む）。
-- **`main` への push**: `.github/workflows/deploy.yml` が `nix build .#site` → Wrangler で
+- **PR**: `.github/workflows/ci.yml` が `nix flake check`（テスト・lint・フォーマット）に続けて
+  `pnpm build` を実行し、壊れた MDX や content のミスを検出する。
+- **`main` への push**: `.github/workflows/deploy.yml` が `pnpm build` → Wrangler で
   Cloudflare Workers にデプロイする。`main` は PR 通過後にマージされるため、CI は push 時には
   再実行しない（冗長な二重実行を避けている）。
 
