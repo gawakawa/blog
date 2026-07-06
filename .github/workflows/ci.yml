@@ -35,6 +35,15 @@ jobs:
       - name: Check
         run: nix flake check
 
+      - name: Install pnpm/Node.js
+        run: nix profile add .#ci
+
+      - name: Install dependencies
+        run: pnpm install --prod --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
   ci-success:
     needs: [tests]
     if: always()
