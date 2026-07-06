@@ -1,5 +1,7 @@
 # Astro Starter Kit: Blog
 
+URL: https://blog.i0ta.dev
+
 ```sh
 pnpm create astro@latest -- --template blog
 ```
